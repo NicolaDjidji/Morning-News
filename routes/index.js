@@ -1,80 +1,27 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-
-var userModel = require('../models/users')
-
-
-router.post('/sign-up', async function(req,res,next){
-
-  var error = []
-  var result = false
-  var saveUser = null
-
-  const data = await userModel.findOne({
-    email: req.body.emailFromFront
-  })
-
-  if(data != null){
-    error.push('utilisateur déjà présent')
+var UserModel = require("../models/users");
+/* GET home page. */
+router.post("/signin", async function (req, res, next) {
+  var searchUser = await UserModel.find({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  console.log(searchUser);
+  res.json(searchUser);
+});
+router.post("/newuser", async function (req, res, next) {
+  let exist = await UserModel.findOne({ email: req.body.email });
+  if (exist === null) {
+    var newUser = new UserModel({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    await newUser.save();
+    res.json(newUser);
+  } else {
+    res.json({ result: false });
   }
-
-  if(req.body.usernameFromFront == ''
-  || req.body.emailFromFront == ''
-  || req.body.passwordFromFront == ''
-  ){
-    error.push('champs vides')
-  }
-
-
-  if(error.length == 0){
-    var newUser = new userModel({
-      username: req.body.usernameFromFront,
-      email: req.body.emailFromFront,
-      password: req.body.passwordFromFront
-    })
-  
-    saveUser = await newUser.save()
-  
-    
-    if(saveUser){
-      result = true
-    }
-  }
-  
-
-  res.json({result, saveUser, error})
-})
-
-router.post('/sign-in', async function(req,res,next){
-
-  var result = false
-  var user = null
-  var error = []
-  
-  if(req.body.emailFromFront == ''
-  || req.body.passwordFromFront == ''
-  ){
-    error.push('champs vides')
-  }
-
-  if(error.length == 0){
-    const user = await userModel.findOne({
-      email: req.body.emailFromFront,
-      password: req.body.passwordFromFront
-    })
-  
-    
-    if(user){
-      result = true
-    } else {
-      error.push('email ou mot de passe incorrect')
-    }
-  }
-  
-
-  res.json({result, user, error})
-
-
-})
-
+});
 module.exports = router;

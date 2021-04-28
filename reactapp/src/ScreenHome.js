@@ -1,104 +1,138 @@
-import React, {useState} from 'react';
-import './App.css';
-import {Input,Button} from 'antd';
-import {Link, Redirect} from 'react-router-dom'
-
+import React, { useState } from "react";
+import "./App.css";
+import { Input, Button } from "antd";
+import { Redirect } from "react-router-dom";
 function ScreenHome() {
+  const [signUpUsername, setsignUpUsername] = useState("");
+  const [signUpEmail, setsignUpEmail] = useState("");
+  const [loginEmail, setloginEmail] = useState("");
+  const [loginPassword, setloginPassword] = useState("");
+  const [signUpPassword, setsignUpPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [checkSignUp, setCheckSignUp] = useState(false);
+  const [checkLogin, setcheckLogin] = useState(false);
 
-  const [signUpUsername, setSignUpUsername] = useState('')
-  const [signUpEmail, setSignUpEmail] = useState('')
-  const [signUpPassword, setSignUpPassword] = useState('')
+  async function handleSubmitSignUp() {
+    console.log("clicked");
+    console.log("work");
 
-  const [signInEmail, setSignInEmail] = useState('')
-  const [signInPassword, setSignInPassword] = useState('')
-
-  const [userExists, setUserExists] = useState(false)
-
-  const [listErrorsSignin, setErrorsSignin] = useState([])
-  const [listErrorsSignup, setErrorsSignup] = useState([])
-
-  var handleSubmitSignup = async () => {
-    
-    const data = await fetch('/sign-up', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `usernameFromFront=${signUpUsername}&emailFromFront=${signUpEmail}&passwordFromFront=${signUpPassword}`
-    })
-
-    const body = await data.json()
-
-    if(body.result == true){
-      setUserExists(true)
+    var req = await fetch(`/newuser`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `username=${signUpUsername}&email=${signUpEmail}&password=${signUpPassword}`,
+    });
+    let res = await req.json();
+    console.log(res);
+    if (
+      res.username &&
+      signUpUsername !== "" &&
+      signUpEmail !== "" &&
+      signUpPassword !== ""
+    ) {
+      setIsLoggedIn(true);
     } else {
-      setErrorsSignup(body.error)
+      setCheckSignUp(true);
     }
   }
+  // (
+  //   `/signin?email=${loginEmail}&password=${loginPassword}`
+  // )
 
-  var handleSubmitSignin = async () => {
- 
-    const data = await fetch('/sign-in', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `emailFromFront=${signInEmail}&passwordFromFront=${signInPassword}`
-    })
-
-    const body = await data.json()
-
-    if(body.result == true){
-      setUserExists(true)
-    }  else {
-      setErrorsSignin(body.error)
+  async function handleSubmitLogin() {
+    console.log("click");
+    var searchUser = await fetch(`/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `email=${loginEmail}&password=${loginPassword}`,
+    });
+    var res = await searchUser.json();
+    console.log(res.length);
+    setcheckLogin(true);
+    if (res[0] !== undefined && loginEmail !== "" && loginPassword !== "") {
+      console.log("work");
+      setIsLoggedIn(true);
+    } else {
+      console.log("me");
+      setcheckLogin(true);
     }
   }
-
-  if(userExists){
-    return <Redirect to='/screensource' />
+  if (isLoggedIn) {
+    return <Redirect to="/screensource" />;
   }
-
-  var tabErrorsSignin = listErrorsSignin.map((error,i) => {
-    return(<p>{error}</p>)
-  })
-
-  var tabErrorsSignup = listErrorsSignup.map((error,i) => {
-    return(<p>{error}</p>)
-  })
-
-  
+  var displaySignUp = {};
+  if (!checkSignUp) {
+    displaySignUp = { display: "none", margin: "30px" };
+  }
+  var displayLogin = {};
+  if (!checkLogin) {
+    console.log("me");
+    displayLogin = { display: "none", margin: "30px" };
+  }
 
   return (
-    <div className="Login-page" >
+    <div className="Login-page">
+      {/* SIGN-IN */}
+      <div className="Sign">
+        <div className="error" style={displayLogin}>
+          Please input every field in Login
+        </div>
+        <Input
+          onChange={(e) => setloginEmail(e.target.value)}
+          value={loginEmail}
+          className="Login-input"
+          placeholder="email"
+        />
 
-          {/* SIGN-IN */}
+        <Input.Password
+          onChange={(e) => setloginPassword(e.target.value)}
+          value={loginPassword}
+          className="Login-input"
+          placeholder="password"
+        />
 
-          <div className="Sign">
-                  
-            <Input onChange={(e) => setSignInEmail(e.target.value)} className="Login-input" placeholder="email" />
-
-            <Input.Password onChange={(e) => setSignInPassword(e.target.value)} className="Login-input" placeholder="password" />
-            
-            {tabErrorsSignin}
-
-            <Button onClick={() => handleSubmitSignin()}  style={{width:'80px'}} type="primary">Sign-in</Button>
-
-          </div>
-
-          {/* SIGN-UP */}
-
-          <div className="Sign">
-                  
-            <Input onChange={(e) => setSignUpUsername(e.target.value)} className="Login-input" placeholder="username" />
-
-            <Input onChange={(e) => setSignUpEmail(e.target.value)} className="Login-input" placeholder="email" />
-
-            <Input.Password onChange={(e) => setSignUpPassword(e.target.value)} className="Login-input" placeholder="password" />
-      
-            {tabErrorsSignup}
-
-            <Button onClick={() => handleSubmitSignup()} style={{width:'80px'}} type="primary">Sign-up</Button>
-
-          </div>
-
+        <Button
+          style={{ width: "80px" }}
+          type="primary"
+          onClick={() => handleSubmitLogin()}
+        >
+          Sign-in
+        </Button>
       </div>
+      {/* SIGN-UP */}
+      <div className="Sign">
+        <div className="error" style={displaySignUp}>
+          Please input every field in SignUp
+        </div>
+        <Input
+          onChange={(e) => setsignUpUsername(e.target.value)}
+          value={signUpUsername}
+          className="Login-input"
+          placeholder="username"
+        />
+
+        <Input
+          onChange={(e) => setsignUpEmail(e.target.value)}
+          value={signUpEmail}
+          className="Login-input"
+          placeholder="email"
+        />
+
+        <Input.Password
+          onChange={(e) => setsignUpPassword(e.target.value)}
+          value={signUpPassword}
+          className="Login-input"
+          placeholder="password"
+        />
+
+        <Button
+          style={{ width: "80px" }}
+          type="primary"
+          onClick={() => handleSubmitSignUp()}
+        >
+          Sign-up
+        </Button>
+      </div>
+    </div>
   );
 }
 

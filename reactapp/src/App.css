@@ -5,7 +5,60 @@ h4 {
   color: white;
   font-weight: bold
 }
+body{
+  background-color: #121212;
+  color: white
+}
+a{
+  color: white!important;
+}
+.ant-list-item-meta-description{
+  color: white;
+}
+.ant-card{
+  background-color:#181818;
+}
 
+.ant-modal-content{
+  background-color: #181818;
+  color: white;
+}
+.ant-btn{
+  background-color: white;
+  color: #121212;
+  border: none;
+  
+}
+.ant-modal-header{
+  background-color: #181818;
+  
+}
+.ant-modal-title{
+  color: white;
+}
+.ant-btn:hover{
+  background-color: #302f2f;
+  color: white;
+}
+.ant-card-actions svg {
+  color: rgb(255, 255, 255);
+}
+.ant-card-bordered{
+  border: 1px solid #302f2f
+}
+.ant-card-actions{
+  background-color: #404040;
+  border: none;
+}
+.ant-card-meta-title{
+  color: white;
+}
+.ant-card-meta-description{
+  color: white;
+}
+.ant-menu-dark{
+  background-color: #181818
+}
 .Login-page{
     display: flex;
     flex-direction: row;
@@ -19,7 +72,9 @@ h4 {
     
 
     }
-
+.ant-list-split .ant-list-item{
+  border-bottom: 1px solid #282828;
+}
 .Login-input{
   margin: 15px;
   width: 400px;
@@ -33,7 +88,7 @@ h4 {
     padding-bottom: 15px;
     border-radius: 5%;
     border-color: white;
-    background-color: rgba(63,169,255,0.5);
+    background-color: rgb(26, 26, 26);
     margin: 40px;
 }
 
@@ -48,7 +103,7 @@ h4 {
 }
 
 .Banner {
-  height: 80px;
+  height: 160px;
   background-image: url('/images/flat01.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -60,7 +115,26 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
 }
 
 
+.error{
+  color: white;
+  margin-top: 15px;
+  text-align: center;
+}
+.CardError{
+  display: flex;
+  height: 70vh;
+  align-items: center;
+    justify-content: center;
+}
+.container{
+  width: 800px;
+  margin-top: 20px;
+}
+.ant-list-item:hover{
+  background-color: rgb(26, 26, 26);
+  cursor: pointer;
+  transition: 0.3s
+}
