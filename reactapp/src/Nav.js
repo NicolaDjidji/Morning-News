@@ -1,14 +1,12 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-import './App.css';
-import {Menu, Icon} from 'antd'
+import React from "react";
+import { Link } from "react-router-dom";
+import "./App.css";
+import { Menu, Icon } from "antd";
 
-function Nav() {
-
+function Nav(props) {
   return (
-    <nav >
-      <Menu style={{textAlign: 'center'}} mode="horizontal" theme="dark">
-
+    <nav>
+      <Menu style={{ textAlign: "center" }} mode="horizontal" theme="dark">
         <Menu.Item key="mail">
           <Link to="/screensource">
             <Icon type="home" />
@@ -29,7 +27,6 @@ function Nav() {
             Logout
           </Link>
         </Menu.Item>
-
       </Menu>
     </nav>
   );

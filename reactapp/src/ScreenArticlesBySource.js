@@ -4,7 +4,7 @@ import "./App.css";
 import { connect } from "react-redux";
 import { Card, Icon, Modal } from "antd";
 import Nav from "./Nav";
-
+import { Link } from "react-router-dom";
 const { Meta } = Card;
 
 const ScreenArticlesBySource = ({ addToWishList }) => {
@@ -19,7 +19,7 @@ const ScreenArticlesBySource = ({ addToWishList }) => {
   useEffect(() => {
     const findArticles = async () => {
       const data = await fetch(
-        `https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=a5f349ef72e749e483ab2344a03e5a90`
+        `https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=d6909b1d94584011ba38de44d8101300`
       );
       const body = await data.json();
       console.log(body);
@@ -67,17 +67,19 @@ const ScreenArticlesBySource = ({ addToWishList }) => {
                   key="ellipsis2"
                   onClick={() => showModal(article.title, article.content)}
                 />,
-                <Icon
-                  type="like"
-                  key="ellipsis"
-                  onClick={() =>
-                    addToWishList({
-                      title: article.title,
-                      desc: article.content,
-                      img: article.urlToImage,
-                    })
-                  }
-                />,
+                <Link to="/screenmyarticles">
+                  <Icon
+                    type="like"
+                    key="ellipsis"
+                    onClick={() =>
+                      addToWishList({
+                        title: article.title,
+                        desc: article.content,
+                        img: article.urlToImage,
+                      })
+                    }
+                  />
+                </Link>,
               ]}
             >
               <Meta title={article.title} description={article.description} />

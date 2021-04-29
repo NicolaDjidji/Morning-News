@@ -8,7 +8,9 @@ import ScreenHome from "./ScreenHome";
 import ScreenArticlesBySource from "./ScreenArticlesBySource";
 import ScreenMyArticles from "./ScreenMyArticles";
 import ScreenSource from "./ScreenSource";
-const store = createStore(combineReducers({ articles }));
+import user from "./reducer/user.reducer";
+import country from "./reducer/country.reducer";
+const store = createStore(combineReducers({ articles, user, country }));
 function App() {
   return (
     <Provider store={store}>

@@ -10,6 +10,7 @@ const ScreenMyArticles = ({ article, deleteToWishList }) => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [animation, setAnimation] = useState(false);
   const container = useRef(null);
   console.log(article);
   var showModal = (title, content) => {
@@ -18,6 +19,7 @@ const ScreenMyArticles = ({ article, deleteToWishList }) => {
     setContent(content);
   };
   useEffect(() => {
+    console.log("animationData");
     lottie.loadAnimation({
       container: container.current,
       render: "svg",
@@ -25,7 +27,7 @@ const ScreenMyArticles = ({ article, deleteToWishList }) => {
       autoplay: true,
       animationData: require("./error.json"),
     });
-  }, []);
+  });
   var handleOk = (e) => {
     console.log(e);
     setVisible(false);
@@ -50,7 +52,11 @@ const ScreenMyArticles = ({ article, deleteToWishList }) => {
           }}
           cover={<img alt="example" src={singleArticle.img} />}
           actions={[
-            <Icon type="read" key="ellipsis2" />,
+            <Icon
+              type="read"
+              key="ellipsis2"
+              onClick={() => showModal(singleArticle.title)}
+            />,
             <Icon
               type="delete"
               onClick={() => deleteToWishList(singleArticle.title)}
@@ -86,21 +92,22 @@ const ScreenMyArticles = ({ article, deleteToWishList }) => {
         </div>
       </div>
     );
-  }
-  return (
-    <div>
-      <Nav />
+  } else {
+    return (
+      <div>
+        <Nav />
 
-      <div className="Banner" />
+        <div className="Banner" />
 
-      <div className="CardError">
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <h1 className="error">There is nothing to see here</h1>
-          <div className="container" ref={container}></div>
+        <div className="CardError">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <h1 className="error">There is nothing to see here</h1>
+            <div className="container" ref={container}></div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 function mapStateToProps(state) {
   return { article: state.articles };

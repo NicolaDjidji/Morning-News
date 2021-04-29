@@ -9,6 +9,9 @@ body{
   background-color: #121212;
   color: white
 }
+.ant-list-item-meta-title{
+  color: white;
+}
 a{
   color: white!important;
 }
@@ -55,6 +58,7 @@ a{
 }
 .ant-card-meta-description{
   color: white;
+  font-size: 12px;
 }
 .ant-menu-dark{
   background-color: #181818
@@ -109,15 +113,49 @@ a{
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.8;
+  display: flex;
+  align-items: center;
+    justify-content: center;
 }
+.flag1{
+  height: 63px;
+  background-image: url('/France.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.flag2{
+  height: 63px;
+  background-image: url('/US.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100px;
+  border-radius: 5px;
+}
+.flag1:hover{
 
+  cursor: pointer;
+  transition: 0.2s;
+opacity: 0.8;
+}
+.flag2:hover{
+  cursor: pointer;
+  transition: 0.2s;
+  opacity: 0.8;
+}
 .Card{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-
+.ant-empty-description{
+  color: white;
+}
 .error{
   color: white;
   margin-top: 15px;
@@ -125,7 +163,7 @@ a{
 }
 .CardError{
   display: flex;
-  height: 70vh;
+  /* height: 70vh; */
   align-items: center;
     justify-content: center;
 }

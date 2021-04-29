@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import { Input, Button } from "antd";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-function ScreenHome() {
+function ScreenHome({ userToken }) {
   const [signUpUsername, setsignUpUsername] = useState("");
   const [signUpEmail, setsignUpEmail] = useState("");
   const [loginEmail, setloginEmail] = useState("");
@@ -13,9 +14,6 @@ function ScreenHome() {
   const [checkLogin, setcheckLogin] = useState(false);
 
   async function handleSubmitSignUp() {
-    console.log("clicked");
-    console.log("work");
-
     var req = await fetch(`/newuser`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -29,6 +27,8 @@ function ScreenHome() {
       signUpEmail !== "" &&
       signUpPassword !== ""
     ) {
+      const token = res.token;
+      userToken(token);
       setIsLoggedIn(true);
     } else {
       setCheckSignUp(true);
@@ -46,10 +46,14 @@ function ScreenHome() {
       body: `email=${loginEmail}&password=${loginPassword}`,
     });
     var res = await searchUser.json();
+    console.log(res[0].token);
     console.log(res.length);
+
     setcheckLogin(true);
     if (res[0] !== undefined && loginEmail !== "" && loginPassword !== "") {
       console.log("work");
+      const token = res[0].token;
+      userToken(token);
       setIsLoggedIn(true);
     } else {
       console.log("me");
@@ -135,5 +139,17 @@ function ScreenHome() {
     </div>
   );
 }
-
-export default ScreenHome;
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    userToken: function (useToken) {
+      dispatch({
+        type: "newToken",
+        token: useToken,
+      });
+    },
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenHome);
