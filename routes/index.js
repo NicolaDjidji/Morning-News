@@ -32,6 +32,7 @@ router.post("/newuser", async function (req, res, next) {
       email: req.body.email,
       password: hash,
       token: uid2(32),
+      articles: {},
     });
     await newUser.save();
     res.json(newUser);
@@ -40,13 +41,12 @@ router.post("/newuser", async function (req, res, next) {
   }
 });
 router.post("/newarticle", async function (req, res, next) {
-  var newArticle = new ArticleModel({
-    img: req.body.img,
-    title: req.body.title,
-    desc: req.body.desc,
-  });
-  await newArticle.save();
-  res.json(newArticle);
+  // 0- envoyer le token a partir de react
+  // 1- recup user with token
+  // 2- updateOne avec push dans user
+  var token = req.body.token;
+  console.log(token);
+  res.json({ test: true });
 });
 router.post("/deletearticle/:title", async function (req, res, next) {
   await ArticleModel.deleteMany({

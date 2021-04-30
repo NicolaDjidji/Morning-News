@@ -7,7 +7,7 @@ import Nav from "./Nav";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 
-const ScreenArticlesBySource = ({ addToWishList }) => {
+const ScreenArticlesBySource = ({ addToWishList }, props) => {
   const [articleList, setArticleList] = useState([]);
 
   const [visible, setVisible] = useState(false);
@@ -44,7 +44,16 @@ const ScreenArticlesBySource = ({ addToWishList }) => {
     console.log(e);
     setVisible(false);
   };
-
+  async function sendTokenToBack() {
+    console.log("token send");
+    console.log(props.token);
+    console.log(props.userToken);
+    const data = await fetch(`/newarticle`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `token=${props.token}`,
+    });
+  }
   return (
     <div>
       <Nav />
@@ -71,13 +80,16 @@ const ScreenArticlesBySource = ({ addToWishList }) => {
                   <Icon
                     type="like"
                     key="ellipsis"
-                    onClick={() =>
-                      addToWishList({
-                        title: article.title,
-                        desc: article.content,
-                        img: article.urlToImage,
-                      })
-                    }
+                    onClick={() => {
+                      return (
+                        addToWishList({
+                          title: article.title,
+                          desc: article.content,
+                          img: article.urlToImage,
+                        }),
+                        sendTokenToBack()
+                      );
+                    }}
                   />
                 </Link>,
               ]}
@@ -108,4 +120,10 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-export default connect(null, mapDispatchToProps)(ScreenArticlesBySource);
+function mapStateToProps(state) {
+  return { userToken: state.token };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ScreenArticlesBySource);
