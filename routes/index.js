@@ -37,6 +37,20 @@ router.post("/newuser", async function (req, res, next) {
     res.json({ result: false });
   }
 });
-// router.post("/newarticle", async function (req, res, next) {});
-// router.post("/deletearticle", async function (req, res, next) {});
+router.post("/newarticle", async function (req, res, next) {
+  var newArticle = new ArticleModel({
+    img: req.body.img,
+    title: req.body.title,
+    desc: req.body.desc,
+  });
+  await newArticle.save();
+  res.json(newArticle);
+});
+router.post("/deletearticle/:title", async function (req, res, next) {
+  await ArticleModel.deleteMany({
+    title: req.params.title,
+  });
+  console.log(req.params.title);
+  res.json({ result: true });
+});
 module.exports = router;
