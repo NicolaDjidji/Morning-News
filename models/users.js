@@ -1,16 +1,12 @@
 var mongoose = require("mongoose");
+var articlesSchema = require("./articles");
 
 var UserSchema = mongoose.Schema({
   username: String,
   email: String,
   password: String,
   token: String,
-});
-var articlesSchema = mongoose.Schema({
-  title: String,
-  img: String,
-  title: String,
-  desc: String,
+  // articles: [{ articlesSchema }],
 });
 
 var UserModel = mongoose.model("UsersDB", UserSchema);

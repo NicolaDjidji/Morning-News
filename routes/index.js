@@ -3,6 +3,7 @@ var router = express.Router();
 var UserModel = require("../models/users");
 var uid2 = require("uid2");
 var bcrypt = require("bcrypt");
+// var ArticleModel = require("../models/articles");
 /* GET home page. */
 router.post("/signin", async function (req, res, next) {
   // var searchUser = await UserModel.find({
