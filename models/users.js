@@ -5,15 +5,15 @@ var UserSchema = mongoose.Schema({
   email: String,
   password: String,
   token: String,
-  // articles: [
-  //   {
-  //     img: String,
-  //     title: String,
-  //     desc: String,
-  //   },
-  // ],
+  articles: [articlesSchema]
 });
+var articlesSchema = mongoose.Schema({
+  title: String,
+  img: String,
+  title: String,
+  desc: String,
+})
 
-var MoviesModel = mongoose.model("UsersDB", UserSchema);
+var UserModel = mongoose.model("UsersDB", UserSchema);
 
-module.exports = MoviesModel;
+module.exports = UserModel;
