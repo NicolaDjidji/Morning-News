@@ -5,13 +5,6 @@ var UserSchema = mongoose.Schema({
   email: String,
   password: String,
   token: String,
-  // articles: [
-  //   {
-  //     img: String,
-  //     title: String,
-  //     desc: String,
-  //   },
-  // ],
 });
 
 var MoviesModel = mongoose.model("UsersDB", UserSchema);

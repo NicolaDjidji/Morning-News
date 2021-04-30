@@ -14,6 +14,7 @@ router.post("/signin", async function (req, res, next) {
   // console.log(req.body.password, searchUser.password);
 
   if (bcrypt.compareSync(req.body.password, exist.password)) {
+    console.log("hash success");
     console.log(exist);
     res.json([exist]);
   } else {
