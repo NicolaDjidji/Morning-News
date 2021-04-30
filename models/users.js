@@ -6,7 +6,13 @@ var UserSchema = mongoose.Schema({
   password: String,
   token: String,
 });
+var articlesSchema = mongoose.Schema({
+  title: String,
+  img: String,
+  title: String,
+  desc: String,
+});
 
-var MoviesModel = mongoose.model("UsersDB", UserSchema);
+var UserModel = mongoose.model("UsersDB", UserSchema);
 
-module.exports = MoviesModel;
+module.exports = UserModel;
