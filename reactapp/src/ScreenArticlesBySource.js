@@ -7,7 +7,7 @@ import Nav from "./Nav";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 
-const ScreenArticlesBySource = ({ addToWishList }, props) => {
+const ScreenArticlesBySource = ({ addToWishList, user }) => {
   const [articleList, setArticleList] = useState([]);
 
   const [visible, setVisible] = useState(false);
@@ -46,12 +46,12 @@ const ScreenArticlesBySource = ({ addToWishList }, props) => {
   };
   async function sendTokenToBack() {
     console.log("token send");
-    console.log(props.token);
-    console.log(props.userToken);
+    console.log("The token is: ", user);
+
     const data = await fetch(`/newarticle`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}`,
+      body: `token=${user}`,
     });
   }
   return (
@@ -110,6 +110,10 @@ const ScreenArticlesBySource = ({ addToWishList }, props) => {
     </div>
   );
 };
+function mapStateToProps(state) {
+  console.log("4-State: ", state);
+  return { user: state.user };
+}
 function mapDispatchToProps(dispatch) {
   return {
     addToWishList: function (article) {
@@ -120,9 +124,7 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-function mapStateToProps(state) {
-  return { userToken: state.token };
-}
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

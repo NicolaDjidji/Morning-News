@@ -44,6 +44,8 @@ router.post("/newarticle", async function (req, res, next) {
   // 0- envoyer le token a partir de react
   // 1- recup user with token
   // 2- updateOne avec push dans user
+  let newArticle = await UserModel.find({ token: req.body.token });
+
   var token = req.body.token;
   console.log(token);
   res.json({ test: true });

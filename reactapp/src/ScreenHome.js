@@ -28,6 +28,7 @@ function ScreenHome({ userToken }) {
       signUpPassword !== ""
     ) {
       const token = res.token;
+      console.log("0-SignUp Token", token);
       userToken(token);
       setIsLoggedIn(true);
     } else {
@@ -53,6 +54,7 @@ function ScreenHome({ userToken }) {
     if (res[0] !== undefined && loginEmail !== "" && loginPassword !== "") {
       console.log("work");
       const token = res[0].token;
+      console.log("0-SignUp Token", token);
       userToken(token);
       setIsLoggedIn(true);
     } else {
@@ -142,9 +144,11 @@ function ScreenHome({ userToken }) {
 function mapStateToProps(state) {
   return { token: state.token };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     userToken: function (useToken) {
+      console.log("1-dispatch", useToken);
       dispatch({
         type: "newToken",
         token: useToken,
