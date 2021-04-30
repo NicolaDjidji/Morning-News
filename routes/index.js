@@ -44,10 +44,32 @@ router.post("/newarticle", async function (req, res, next) {
   // 0- envoyer le token a partir de react
   // 1- recup user with token
   // 2- updateOne avec push dans user
-  let newArticle = await UserModel.find({ token: req.body.token });
-
+  let user = await UserModel.find({ token: req.body.token });
+  console.log(user);
   var token = req.body.token;
+  var title = req.body.title;
+  var desc = req.body.desc;
+  var img = req.body.img;
+  var updateAericles = UserModel.updateOne(
+    { token },
+    {
+      $push: {
+        articles: [
+          {
+            title: title,
+            desc: desc,
+            img: img,
+          },
+        ],
+      },
+    }
+  );
   console.log(token);
+  console.log(title);
+  console.log(desc);
+  console.log(UserModel);
+  console.log("update", updateAericles);
+  // await newArticle.save();
   res.json({ test: true });
 });
 router.post("/deletearticle/:title", async function (req, res, next) {

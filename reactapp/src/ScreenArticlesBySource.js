@@ -44,15 +44,18 @@ const ScreenArticlesBySource = ({ addToWishList, user }) => {
     console.log(e);
     setVisible(false);
   };
-  async function sendTokenToBack() {
+  async function sendTokenToBack(title, desc, img) {
     console.log("token send");
     console.log("The token is: ", user);
-
+    console.log("title: ", title.title);
+    console.log("Desc is:", title);
     const data = await fetch(`/newarticle`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${user}`,
+      body: `token=${user}&title=${title.title}&desc=${title.desc}&img=${title.img}`,
     });
+    let res = await data.json();
+    console.log(res);
   }
   return (
     <div>
@@ -87,7 +90,11 @@ const ScreenArticlesBySource = ({ addToWishList, user }) => {
                           desc: article.content,
                           img: article.urlToImage,
                         }),
-                        sendTokenToBack()
+                        sendTokenToBack({
+                          title: article.title,
+                          desc: article.content,
+                          img: article.urlToImage,
+                        })
                       );
                     }}
                   />
