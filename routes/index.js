@@ -3,6 +3,7 @@ var router = express.Router();
 var UserModel = require("../models/users");
 var uid2 = require("uid2");
 var bcrypt = require("bcrypt");
+const { token } = require("morgan");
 // var ArticleModel = require("../models/articles");
 /* GET home page. */
 router.post("/signin", async function (req, res, next) {
@@ -44,12 +45,29 @@ router.post("/newarticle", async function (req, res, next) {
   // 0- envoyer le token a partir de react
   // 1- recup user with token
   // 2- updateOne avec push dans user
-  let newArticle = await UserModel.find({ token: req.body.token });
+  console.log('req.body.img', req.body.img)
+  console.log('req.body', req.body)
+  let user = await UserModel.findOne({token:req.body.token})
+  console.log('user',user)
 
-  var token = req.body.token;
-  console.log(token);
-  res.json({ test: true });
-});
+  var newArticle = {
+    title: req.body.title,
+    img: req.body.img,
+    
+    desc: req.body.desc
+  }
+  var updateArticle = await UserModel.updateOne(
+    {_id: user._id}, //filter
+    {$articles:[...user.articles, newArticle] 
+    
+    } // change
+  ); 
+
+console.log('updateartic', updateArticle)
+  res.json({result: true})  
+  });
+  
+ 
 router.post("/deletearticle/:title", async function (req, res, next) {
   await ArticleModel.deleteMany({
     title: req.params.title,

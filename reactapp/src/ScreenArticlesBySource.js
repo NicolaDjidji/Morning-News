@@ -19,7 +19,7 @@ const ScreenArticlesBySource = ({ addToWishList, user }) => {
   useEffect(() => {
     const findArticles = async () => {
       const data = await fetch(
-        `https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=d6909b1d94584011ba38de44d8101300`
+        `https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=5394d73e58b94d0c8376c181ce3015da`
       );
       const body = await data.json();
       console.log(body);
@@ -44,14 +44,14 @@ const ScreenArticlesBySource = ({ addToWishList, user }) => {
     console.log(e);
     setVisible(false);
   };
-  async function sendTokenToBack() {
+  async function sendTokenToBack(title, desc, img) {
     console.log("token send");
     console.log("The token is: ", user);
 
     const data = await fetch(`/newarticle`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${user}`,
+      body: `token=${user}&title=${title.title}&img=${title.img}&desc=${title.desc}`,
     });
   }
   return (
@@ -85,9 +85,13 @@ const ScreenArticlesBySource = ({ addToWishList, user }) => {
                         addToWishList({
                           title: article.title,
                           desc: article.content,
-                          img: article.urlToImage,
+                          img: article.urlToImage
                         }),
-                        sendTokenToBack()
+                        sendTokenToBack({
+                            title: article.title,
+                          desc: article.content,
+                          img: article.urlToImage
+                        })
                       );
                     }}
                   />

@@ -14,7 +14,7 @@ function ScreenSource(props) {
   useEffect(() => {
     const APIResultsLoading = async () => {
       const data = await fetch(
-        "https://newsapi.org/v2/sources?language=fr&country=fr&apiKey=d6909b1d94584011ba38de44d8101300"
+        "https://newsapi.org/v2/sources?language=fr&country=fr&apiKey=5394d73e58b94d0c8376c181ce3015da"
       );
       const body = await data.json();
       setSourceList(body.sources);
@@ -25,7 +25,7 @@ function ScreenSource(props) {
   useEffect(() => {
     const usAPI = async () => {
       const data = await fetch(
-        "https://newsapi.org/v2/sources?country=us&language=en&apiKey=d6909b1d94584011ba38de44d8101300"
+        "https://newsapi.org/v2/sources?country=us&language=en&apiKey=5394d73e58b94d0c8376c181ce3015da"
       );
       const body = await data.json();
       setSourceENList(body.sources);
