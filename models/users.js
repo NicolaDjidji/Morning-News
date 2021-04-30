@@ -1,5 +1,12 @@
 var mongoose = require("mongoose");
 
+var articlesSchema = mongoose.Schema({
+  img: String,
+  title: String,
+  desc: String,
+});
+
+
 var UserSchema = mongoose.Schema({
   username: String,
   email: String,
@@ -7,12 +14,7 @@ var UserSchema = mongoose.Schema({
   token: String,
   articles: [articlesSchema]
 });
-var articlesSchema = mongoose.Schema({
-  title: String,
-  img: String,
-  title: String,
-  desc: String,
-})
+
 
 var UserModel = mongoose.model("UsersDB", UserSchema);
 
